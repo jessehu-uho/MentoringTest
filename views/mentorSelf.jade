@@ -1,0 +1,35 @@
+extends self-layout
+block lessons
+
+block type
+	h3 Mentor in #{locals.pageof.topicTags}
+
+block rating
+	h4.pull-right Rating: 
+		-if(typeof locals.pageof.rating!=='undefined')
+			p #{locals.pageof.rating}
+		-else
+			p None
+block tutoring
+	.span2.pull-right
+		h4 Request Tutoring?
+		requesturl = '/writeRequest/' + locals.pageof.username
+		a.button.btn(href=requesturl) Make Request
+block reviews
+	h2 Reviews
+	p No reviews yet
+
+block connections
+	h2 Lessons
+	p Not public.
+
+block incoming
+	requests = locals.user.mentorRequests
+		mixin format(request)
+			.row
+				.box
+					accepturl = '/acceptRequest/' + request.studentUsername + '/' + request.mentorUsername
+					p from: #{request.studentUsername}
+					a.button.btn(href=accepturl) Accept Request
+		-each request in requests 
+			mixin format(request)

@@ -1,0 +1,45 @@
+extends layout
+block head
+  title Register
+block scripts
+  script(src="/javascript/registervalidation.js")
+block content
+  .container 
+   form#register(action='/register', method='POST')
+      h1 Register your account!
+      p.login Already have an account?
+        a(href="/login") Login here!
+      .row
+        .span3
+          label(for='firstName') First name:
+          input#firstName(type='text', name='firstName', class="field required", title="Please provide your first name")
+        .span3
+          label(for='lastName') Last Name:
+          input#lastName(type='text', name='lastName', class="field required", title="Please provide your last name")
+      div
+        label(for='register_username') Username:
+        input#register_username(type='text', name='username', class="field required", title="Please provide a username")
+      div
+        label(for='register_password') Password: 
+        input#register_password(type='password', name='password', class="field required", title="Password is required")
+      div
+        label(for='confirm_password') Confirm Password: 
+        input#confirm_password(type='password', name='confirm', class="field required", title="Confirm your password")
+      div
+        label(for='picUrl') URL to Profile Picture:
+        input#picUrl(type='text', name='picUrl', class="field")
+      .row
+        .span2
+            p Type of User(Select One):
+        .span1 Mentor   
+          input#mentor(type='radio', name='type', class='field radio', value = 'mentor') 
+        .span1 Student  
+          input#student(type='radio', name='type', class='field radio', value = 'student')
+      #ifmentor
+        .row
+          .span5
+            label(for='#topicTags') Enter your areas of expertise/mentoring separated by commas:
+            input#topicTags(type='text', name='topicTags', class='field')
+      .spacer
+      .submit
+        button.btn(type='submit') Register

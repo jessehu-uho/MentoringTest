@@ -1,0 +1,70 @@
+extends layout
+block content
+	.container
+		.spacer
+		.profilehead
+			.row
+				.span3
+					picUrl = locals.pageof.picUrl
+					img.img-polaroid(src=picUrl)
+				.span8
+					.row 
+						.span2.pull-right
+							block rating
+					.row	
+						.spacer
+						.span5
+							.pageheader
+								h1 #{locals.pageof.fname} #{locals.pageof.lname} <small> (#{locals.pageof.username}) </small>
+							block type
+						block tutoring
+		.profilebody
+			ul.nav.nav-pills#myTab
+				li 
+					a(href="#profile", data-toggle="tab") Profile
+				li
+					a(href="#lessons", data-toggle="tab") My Lessons
+				li
+					a(href="#requests", data-toggle="tab") Requests
+				li
+					a(href="#settings", data-toggle="tab") Settings
+			#myTabContent.tab-content
+				.tab-pane.fade#profile
+					.row
+						.span3
+							h2 Bio
+							p #{locals.pageof.bio}
+						.span4
+							block connections
+						.span3
+							block reviews
+				.tab-pane.fade#lessons
+					.row
+						.span4.offset1
+							h2 Lessons
+							lessons = locals.lessons
+							mixin format(lesson)
+								lessonurl = '/lesson/' + lesson._id
+								.row
+									.box
+										p lesson name: #{lesson.name}
+										p student: #{lesson.studentUsername}
+										p mentor: #{lesson.mentorUsername}
+										a.button.btn(href=lessonurl) Go To Lesson
+							-each lesson in lessons
+								mixin format(lesson)
+				.tab-pane.fade#requests
+					.row
+						.span4.offset1
+							h2 Incoming Requests
+							block incoming
+						.span4
+							h2 Pending Requests
+							block pending
+				.tab-pane.fade#settings
+					.row
+						.span6.offset1
+							include partials/updateInfo
+block scripts
+	script(src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js")
+	script(src="/javascript/tabs.js")
